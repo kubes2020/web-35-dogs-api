@@ -6,7 +6,7 @@ const server = express()
 server.use(express.json())
 
 server.use('/', (req, res) => {
-    res.status(200).json({message: 'Hello Test'})
+    res.status(200).json({message: 'Hello Lambda Students'})
 })
 
 // const PORT = 5000 
