@@ -28,10 +28,35 @@ server.get('/dogs', (req,res)=> {
     }
 })
 
+// Add new dogs
+
+server.post('/dogs', (req,res) => {
+    const newDog = req.body
+    if(!(newDog.breed)) {
+        res.status(400).json({ errorMessage: 'Please make sure you have a breed listed'})
+    } try {
+        const notNew = dogs.find(dog => breed === req.body.breed)
+        if(!notNew){
+            newDog.id = uuid.v4()
+            dogs.push(newDog)
+            res.status(201).json({ errorMessage: 'Added new dog', newDog })
+        } else {
+            res.status(400).json({ errorMessage: 'Dog is already on server'})
+        }
+    }
+    catch {
+        res.status(500).json({ errorMessage: 'Dang it, Something is broken on the server'})
+    }
+})
+
+
+//Base url
 
 server.use('/', (req, res) => {
     res.status(200).json({message: 'Hello Lambda Students'})
 })
+
+//spins up server
 
 // const PORT = 5000 
 const PORT = process.env.PORT || 5000
