@@ -64,6 +64,22 @@ server.post('/dogs', (req,res) => {
     }
 })
 
+// Delete a dog
+
+server.delete('/dogs/:id', (req, res) =>{
+    const { id } = req.params
+    const findDogById = dog => {
+        return dog.id === id
+    }
+    foundDog = dogs.find(findDogById)
+    if (!foundDog){
+        res.status(400).json({ errorMessage: "cannot find dog with that ID" })
+    } else {
+        dogs = dogs.filter(d => d.id !== id)
+        res.json({deleted: foundDog})
+    }
+})
+
 
 //Base url
 
