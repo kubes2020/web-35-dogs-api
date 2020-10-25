@@ -28,6 +28,21 @@ server.get('/dogs', (req,res)=> {
     }
 })
 
+// Get one dog 
+
+server.get('/dogs/:id', (req, res) => {
+    const { id } = req.params
+    const findDogById = dog => {
+        return dog.id === id
+    }
+    const foundDog = dogs.find(findDogById)
+    if (!foundDog){
+        res.status(400).json({ errorMessage: 'cannot find a dog with that ID'})
+    } else {
+        res.json(foundDog)
+    }
+})
+
 // Add new dogs
 
 server.post('/dogs', (req,res) => {
@@ -39,7 +54,7 @@ server.post('/dogs', (req,res) => {
         if(!notNew){
             newDog.id = uuid.v4()
             dogs.push(newDog)
-            res.status(201).json({ errorMessage: 'Added new dog', newDog })
+            res.status(201).json({ message: 'Added new dog', newDog })
         } else {
             res.status(400).json({ errorMessage: 'Dog is already on server'})
         }
