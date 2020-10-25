@@ -35,7 +35,7 @@ server.post('/dogs', (req,res) => {
     if(!(newDog.breed)) {
         res.status(400).json({ errorMessage: 'Please make sure you have a breed listed'})
     } try {
-        const notNew = dogs.find(dog => breed === req.body.breed)
+        const notNew = dogs.find(dog => dog.breed === req.body.breed)
         if(!notNew){
             newDog.id = uuid.v4()
             dogs.push(newDog)
